@@ -1,6 +1,42 @@
 # Created by https://www.toptal.com/developers/gitignore/api/react,node,laravel,phpstorm,nextjs
 # Edit at https://www.toptal.com/developers/gitignore?templates=react,node,laravel,phpstorm,nextjs
 
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
 ### Laravel ###
 /vendor/
 node_modules/
@@ -63,6 +99,9 @@ yarn-error.log*
 next-env.d.ts
 
 ### Node ###
+npm-debug.log
+yarn-error.log
+
 # Logs
 logs
 *.log
