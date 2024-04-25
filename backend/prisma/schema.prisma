@@ -28,7 +28,7 @@ model doctors {
 
 model patient {
   pk_patient        BigInt     @id @default(autoincrement())
-  firt_name         String     @db.VarChar(50)
+  first_name         String     @db.VarChar(50)
   last_name         String     @db.VarChar(50)
   birth_date        DateTime   
   phone_number      String?    @db.Char(9)
