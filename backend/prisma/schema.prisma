@@ -12,3 +12,86 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model doctors {
+  pk_doctor         BigInt     @id @default(autoincrement())
+  fk_medical_center BigInt     
+  firt_name         String     @db.VarChar(50) 
+  last_name         String     @db.VarChar(50) 
+  code              String     @db.VarChar(6) 
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @default(now())
+
+  // Campo de relación opuesto
+  orders            order[]
+}
+
+model patient {
+  pk_patient        BigInt     @id @default(autoincrement())
+  firt_name         String     @db.VarChar(50)
+  last_name         String     @db.VarChar(50)
+  birth_date        DateTime   
+  phone_number      String?    @db.Char(9)
+  email             String?    @db.VarChar(50)
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @default(now())
+
+  // Campo de relación opuesto
+  orders            order[]
+}
+
+model users {
+  pk_user           BigInt     @id @default(autoincrement())
+  email             String     @db.VarChar(50)
+  name              String?    @db.VarChar(50)
+  password          String     @db.VarChar(50)
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @default(now())
+
+  // Campo de relación opuesto
+  orders            order[]
+}
+
+model medical_test {
+  pk_medical_test   BigInt     @id @default(autoincrement())
+  name              String?    @db.VarChar(50)
+  description       String?    @db.VarChar(500)
+  price             Float      @db.Float()
+  created_at        DateTime   @default(now())
+  updated_at        DateTime   @default(now())
+
+  // Campo de relación opuesto
+  order_detail order_details[]
+}
+
+model order {
+  pk_order         BigInt      @id @default(autoincrement())
+  fk_doctor        BigInt      
+  fk_patient       BigInt      
+  fk_user          BigInt      
+  code             String      @db.Char(8)   
+  is_active        Boolean     @default(true) 
+  created_at       DateTime    @default(now()) 
+  updated_at       DateTime    @default(now())
+
+  // Relation
+  doctorRel        doctors     @relation(fields: [fk_doctor], references: [pk_doctor])
+  patientRel       patient     @relation(fields: [fk_patient], references: [pk_patient])
+  userRel          users       @relation(fields: [fk_user], references: [pk_user])
+
+  // Campo de relación opuesto
+  order_detail order_details[]
+}
+
+model order_details {
+  pk_order_detail  BigInt      @id @default(autoincrement())
+  fk_order         BigInt
+  fk_medical_test  BigInt
+  price            Float       @db.Float()
+  created_at       DateTime    @default(now()) 
+  updated_at       DateTime    @default(now()) 
+
+  // Relation
+  ordenRel           order           @relation(fields: [fk_order], references: [pk_order])
+  medical_testRel    medical_test    @relation(fields: [fk_medical_test], references: [pk_medical_test])
+}
