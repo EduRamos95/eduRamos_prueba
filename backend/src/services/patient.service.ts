@@ -1,6 +1,6 @@
 import { patient } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class PatientService {
@@ -25,19 +25,33 @@ export class PatientService {
   }
 
   async updatePatient(id: number, data: patient): Promise<patient> {
-    return this.prisma.patient.update({
-      where: {
-        pk_patient: id,
-      },
-      data,
-    });
+    if (!data || Object.keys(data).length === 0) {
+      throw new Error('Data is missing or empty');
+    }
+    try {
+      data.updated_at = new Date();
+      const id_valid = await this.prisma.patient.update({
+        where: {
+          pk_patient: id,
+        },
+        data,
+      });
+      return id_valid;
+    } catch (error) {
+      throw new NotFoundException(`Error: not found Patient`);
+    }
   }
 
   async deletePatient(id: number): Promise<patient> {
-    return this.prisma.patient.delete({
-      where: {
-        pk_patient: id,
-      },
-    });
+    try {
+      const id_valid = await this.prisma.patient.delete({
+        where: {
+          pk_patient: id,
+        },
+      });
+      return id_valid;
+    } catch (error) {
+      throw new NotFoundException(`Error: not found Patient`);
+    }
   }
 }

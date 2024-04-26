@@ -4,6 +4,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  NotFoundException,
   Param,
   Post,
   Put,
@@ -29,38 +31,48 @@ export class PatientController {
   @Get(':id')
   async getPatientById(@Param('id') id: string) {
     const result = await this.patientService.getPatientById(Number(id));
-    if (!result) throw new BadRequestException('Patient does not exist');
+    if (!result) throw new NotFoundException('Patient does not exist');
     const patientFound = { ...result, pk_patient: Number(result.pk_patient) };
     return patientFound;
   }
 
   @Post()
-  async createTask(@Body() data: patient) {
-    const result = await this.patientService.createPatient(data);
-    // Convertir el BigInt a un número antes de enviar la respuesta
-    const patient = { ...result, pk_patient: Number(result.pk_patient) };
-    return patient;
+  async createPatient(@Body() data: patient) {
+    try {
+      const result = await this.patientService.createPatient(data);
+      // Convertir el BigInt a un número antes de enviar la respuesta
+      const patient = { ...result, pk_patient: Number(result.pk_patient) };
+      return patient;
+    } catch (error) {
+      throw new BadRequestException(`Error data: created Patient`);
+    }
   }
 
   @Put(':id')
+  @HttpCode(204)
   async updatePatient(@Param('id') id: string, @Body() data: patient) {
     try {
-      const result = await this.patientService.updatePatient(Number(id), data);
-      const updPatient = { ...result, pk_patient: Number(result.pk_patient) };
-      return updPatient;
+      await this.patientService.updatePatient(Number(id), data);
     } catch (error) {
-      throw new BadRequestException('Patient does not exist');
+      if (error instanceof NotFoundException) {
+        throw error; // Propaga la excepción NotFoundException
+      } else {
+        throw new BadRequestException(`Error validation data: updated patient`);
+      }
     }
   }
 
   @Delete(':id')
+  @HttpCode(204)
   async deletePatient(@Param('id') id: string) {
     try {
-      const result = await this.patientService.deletePatient(Number(id));
-      const delPatient = { ...result, pk_patient: Number(result.pk_patient) };
-      return delPatient;
+      await this.patientService.deletePatient(Number(id));
     } catch (error) {
-      throw new BadRequestException('Patient does not exist');
+      if (error instanceof NotFoundException) {
+        throw error; // Propaga la excepción NotFoundException
+      } else {
+        throw new BadRequestException(`Error: delete patient`);
+      }
     }
   }
 }
