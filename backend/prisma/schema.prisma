@@ -102,8 +102,8 @@ model order_details {
   fk_order         BigInt
   fk_medical_test  BigInt
   price            Float       @db.Float()
-  created_at       DateTime    @default(now()) 
-  updated_at       DateTime    @default(now()) 
+  created_at       DateTime    @default(now())
+  updated_at       DateTime    @default(now())
 
   // Relation
   ordenRel           order           @relation(fields: [fk_order], references: [pk_order])
