@@ -78,7 +78,7 @@ export function getDoctors() {
     const lastName = lastNames[Math.floor(Math.random() * lastNames.length)]; // Selecciona un apellido de la lista de lastNames aleatoriamente
     const codePrefix =
       firstName.charAt(0) + lastName.charAt(0) + fkMedicalCenter; // Crea el prefijo del código alfanumérico
-    const randomNumbers = Math.floor(100 + Math.random() * 900); // Genera un número aleatorio de 3 dígitos
+    const randomNumbers = Math.floor(100 + Math.random() * 800); // Genera un número aleatorio de 3 dígitos
 
     const doctor = {
       fk_medical_center: fkMedicalCenter,
@@ -135,7 +135,7 @@ export function generatePatients() {
     const birthMonth = Math.floor(Math.random() * 12) + 1;
     const birthDay = Math.floor(Math.random() * 28) + 1; // Limitamos a 28 días para evitar fechas inválidas
     const birthDate = new Date(birthYear, birthMonth - 1, birthDay);
-    const phoneNumber = `9${Math.floor(100000000 + Math.random() * 900000000)}`; // Genera un número de 9 dígitos que empiece con 9
+    const phoneNumber = `9${Math.floor(10000000 + Math.random() * 90000000)}`; // Genera un número de 9 dígitos que empiece con 9
     const emailExtension =
       emailExtensions[Math.floor(Math.random() * emailExtensions.length)];
     const email = `${firstName.toLowerCase()}.${lastName.toLowerCase()}${Math.floor(Math.random() * 999)}${emailExtension}`;
