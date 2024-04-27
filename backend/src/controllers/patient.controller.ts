@@ -18,7 +18,7 @@ export class PatientController {
   constructor(private readonly patientService: PatientService) {}
 
   @Get()
-  async getAllTasks() {
+  async getAllPatients() {
     const patients = await this.patientService.getAllPatients();
     // Convertir los BigInt a números antes de enviar la respuesta
     const patientsWithNumericIds = patients.map((patient) => ({
