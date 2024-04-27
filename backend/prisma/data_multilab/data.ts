@@ -229,3 +229,46 @@ export function generateUsers() {
 
   return users;
 }
+
+/* 15 Orders */
+export function generateOrders() {
+  const orders = [];
+  const currentCode = 10020030;
+
+  for (let i = 0; i < 15; i++) {
+    const fkDoctor = Math.floor(Math.random() * 20) + 1; // Genera un número aleatorio entre 1 y 20 para fk_doctor
+    const fkPatient = Math.floor(Math.random() * 50) + 1; // Genera un número aleatorio entre 1 y 50 para fk_patient
+    const fkUser = Math.floor(Math.random() * 5) + 1; // Genera un número aleatorio entre 1 y 5 para fk_user
+    const code = (currentCode + i).toString();
+
+    const order = {
+      fk_doctor: fkDoctor,
+      fk_patient: fkPatient,
+      fk_user: fkUser,
+      code: code,
+    };
+
+    orders.push(order);
+  }
+
+  return orders;
+}
+
+/* 15 Order_detail */
+export function generateOrderDetail() {
+  const orderDetails = [];
+
+  for (let i = 1; i <= 15; i++) {
+    const fkOrder = i;
+    const fkMedicalTest = Math.floor(Math.random() * 10) + 1; // Genera un número aleatorio entre 1 y 10 para fk_medical_test
+
+    const orderDetail = {
+      fk_order: fkOrder,
+      fk_medical_test: fkMedicalTest,
+    };
+
+    orderDetails.push(orderDetail);
+  }
+
+  return orderDetails;
+}
