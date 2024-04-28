@@ -9,9 +9,13 @@ import { PatientService } from './services/patient.service';
 import { MedicalCenterController } from './controllers/medical_center.controller';
 import { MedicalCenterService } from './services/medical_center.service';
 
+// authorization
+import { AuthController } from './controllers/authentication.controller';
+import { AuthService } from './services/authentication.service';
+
 @Module({
   imports: [PrismaModule],
-  controllers: [PatientController, MedicalCenterController],
-  providers: [PatientService, MedicalCenterService],
+  controllers: [PatientController, MedicalCenterController, AuthController],
+  providers: [PatientService, MedicalCenterService, AuthService],
 })
 export class AppModule {}
