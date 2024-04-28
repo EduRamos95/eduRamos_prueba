@@ -56,7 +56,7 @@ model patient {
 
 model users {
   pk_user           BigInt     @id @default(autoincrement())
-  email             String     @db.VarChar(50)
+  email             String     @db.VarChar(50) @unique
   name              String?    @db.VarChar(50)
   password          String     @db.VarChar(50)
   created_at        DateTime   @default(now())
@@ -83,8 +83,8 @@ model order {
   fk_doctor        BigInt      
   fk_patient       BigInt      
   fk_user          BigInt      
-  code             String      @db.Char(8)   
-  is_active        Boolean     @default(true) 
+  code             String      @db.Char(8) @unique
+  is_active        Boolean     @default(true)
   created_at       DateTime    @default(now()) 
   updated_at       DateTime    @default(now())
 
