@@ -2,25 +2,27 @@
 "use client";
 import React from 'react';
 import { useForm } from "react-hook-form";
-import { useRouter } from 'next/router';
-import {useState} from 'react';
-import { isCompositeComponent } from 'react-dom/test-utils';
+import { useRouter } from 'next/navigation'
+import { useState } from 'react';
+import { RouteApi } from '@/config/routesApi';
+
 
 const LoginPage: React.FC = () => {
+  const ApiLogin = `${RouteApi.base}${RouteApi.path.authLogin}`;
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  // const router = useRouter()
-  // const router = useNavigation();
-  const [error, setError] = useState(null)
+  const router = useRouter()
+
+  const [error, setError] = useState<string | null>(null)
   
   const onSubmit = handleSubmit(async (data) => {
     console.log(data);
 
     try {
-      const res = await fetch('http://localhost:3000/auth/login', {
+      const res = await fetch(`${ApiLogin}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -30,20 +32,22 @@ const LoginPage: React.FC = () => {
           password: data.password,
         }),
       });
+
       console.log(res)
       console.log(await res.json());
-      if (res.body != null) {
-        // setError(res.error)
-        console.log("error")
+
+      if (res.status >= 400 && res.status <= 505) {
+        setError("Not Found");
+        console.log( "Error:", res.status );
       } else {
-        console.log("paso")
-        // router.push('/dashboard')
-        // router.refresh()
+        console.log("Verify");
+        router.push('/Pages/Dashboard');
+        router.refresh();
       }
-    } catch (error){
+    } catch (err) {
+      console.log( "Error msg" );
     };
     
-    console.log(error ?? "no msg" );
     }
   )
 
