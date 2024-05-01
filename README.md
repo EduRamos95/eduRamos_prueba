@@ -56,11 +56,11 @@
   - [x] Scenario 10: Delete patient. DELETE request with valid id → Patient deleted (status 204).
   - [x] Scenario 11: Delete patient. DELETE request with invalid id (status 404).
 
-- [ ] Exercise 3: User authentication system based on the users table, which allows me to log in with my email and password.
-  - [ ] Frontend:
-    - [ ] Scenario 1: Successful login. Since I enter a valid username and password to the login form, the session is created and the browser is redirected to a welcome screen or to the order list (Exercise 4).
+- [x] Exercise 3: User authentication system based on the users table, which allows me to log in with my email and password.
+  - [x] Frontend:
+    - [x] Scenario 1: Successful login. Since I enter a valid username and password to the login form, the session is created and the browser is redirected to a welcome screen or to the order list (Exercise 4).
 
-    - [ ] Scenario 2: Incorrect login data: Since I entered an invalid username and password (the user does not exist in the database or the password is incorrect), a message of please verify your email and password is displayed.
+    - [x] Scenario 2: Incorrect login data: Since I entered an invalid username and password (the user does not exist in the database or the password is incorrect), a message of please verify your email and password is displayed.
   - [x] Backend:
     - [x] API implementation to verify if a user can log in.
 
